@@ -1,7 +1,10 @@
 #include <ctikz/ctikz.hpp>
 #include <fstream>
 
-
+/*!
+\brief Генерирует tikz файл
+\param filename  название генерируемого файла
+*/
 void CTikz::create_tikz_file(std::string filename){
     if (block_status == 1){
         end_axis();
@@ -30,7 +33,9 @@ CTikz::CTikz(){
     writing << "\\begin{document}" << std::endl;
 
 }
-
+/*
+\brief Конец блока с системой координат
+*/
 void CTikz::end_axis(){
     if (block_status == 1){
         writing << "\\end{axis}" << std::endl;
@@ -44,23 +49,18 @@ void CTikz::end_axis(){
 
 
 // may be add title !!!!
-void CTikz::start_axis(std::string axis_lines, bool grade, double scale, double ymin, double xmin){
+void CTikz::start_axis(AxisStyle style){
     if(block_status != 0){
         throw "Error";
     }
     block_status = 1;
     writing << "\\begin{tikzpicture}" << std::endl;
     writing << "\\begin{axis}[" << std::endl;
-    if (grade){
-        writing << "grade, ";
-    }
-    writing << "axis lines=" << axis_lines << "," << std::endl;
-    writing << "scale=" << scale << "," << std::endl;
-    writing << "ymin=" << ymin << "," << std::endl;
-    writing << "xmin=" << xmin << "]\n";
+    style.write(writing);
+
 }
 
-void CTikz::drawFunc(std::vector<std::pair<long double, long double>> points, FunctionStyle style){
+void CTikz::drawFunc(std::vector<std::pair<double, double>> points, FunctionStyle style){
     if(block_status == 0){
         throw "Axis not found";
     }   

@@ -6,14 +6,17 @@
 #include <cmath>
 #include <vector>
 
+/**
+* @brief Структура, которая задает стиль функций.
+*/
 struct FunctionStyle{
-    std::string color = "black";
-    std::string mark = "none";
-    std::string mark_size = "";
-    bool only_marks = 0;
-    int samples = 200;
+    std::string color = "black"; /**< цвет линии и точек */
+    std::string mark = "none"; /**< обозначение отметок графика функции (по умолчанию толстые точки) */
+    std::string mark_size = ""; /**< толщина отметок */
+    bool only_marks = 0; /**< отображение только ометок */
+    int samples = 200; /**< шаг значений, повышающий качество графика */
 
-    void write(std::stringstream& writing){
+    void write(std::stringstream& writing){ /**< записывает параметры стиля в поток */
          writing << "\\addplot [" << std::endl;
         writing << "mark=" << mark << "," << std::endl;
         if(only_marks){
@@ -27,14 +30,16 @@ struct FunctionStyle{
     }
 };
 
+/**
+ * @brief Структура, которая задает стиль фигур.
+ */
 struct FigureStyle{
-    std::string color = "black";
-    std::string patterned = "solid"; // default
-    std::string arrow = "";
-    std::string thickness = "";
-    std::string fill = "none";
-
-    void write(std::stringstream& writing){
+    std::string color = "black"; /**< цвет контура фигуры */
+    std::string patterned = "solid"; /**< толщина линии, также можно указать числом, например 4pt (смотреть документацию) */
+    std::string arrow = ""; /**< стрелка (для отрезков) */
+    std::string thickness = ""; /**< стиль линии */
+    std::string fill = "none"; /**< заливка (цвет) */
+    void write(std::stringstream& writing){ /**< записывает параметры стиля в поток */
         writing << "\\draw[";
         writing << "color=" << color << ", ";
         writing << "fill=" << fill << ", ";
@@ -49,23 +54,25 @@ struct FigureStyle{
 
 };
 
+/**
+ * @brief Структура, которая задает стиль Axis-блока (Системы координат).
+ */
 struct AxisStyle{
-    std::string title = "";
-    std::string xlabel = "";
-    std::string ylabel = "";
+    std::string title = ""; /**< заголовок над Axis-блоком */
+    std::string xlabel = ""; /**< подпись горизонтальной оси (абсцисс) */
+    std::string ylabel = ""; /**< подпись вертикальной оси (ординат) */
+    std::string ymin = ""; /**< минимальное значение y */
+    std::string xmin = ""; /**< минимальное значение x */
+    std::string xmax = ""; /**< максимальное значение x */
+    std::string ymax = ""; /**< максимальное значение y */
 
-    std::string ymin = "";
-    std::string xmin = "";
-    std::string xmax = "";
-    std::string ymax = "";
+    std::string axis_lines = "box"; /**< расположение осей относительно Axis-блока (Например left, right и др.) */
+    bool grid = 0; /**< вспомогательная сетка */
+    std::string grid_style = ""; /**< стиль вспомогательной сетки  */
+    double scale = 1; /**< масштаб */
+    bool enlarge_limits = 1; /**< расположение точек на краях Axis-блока */
 
-    std::string axis_lines = "box";
-    bool grid = 0;
-    std::string grid_style = "";
-    double scale = 1;
-    bool enlarge_limits = 1; 
-
-    void write(std::stringstream& writing){
+    void write(std::stringstream& writing){ /**< записывает параметры стиля в поток */
         if (!title.empty()){
             writing << "title=" << title << "," << std::endl;
         }
@@ -99,9 +106,12 @@ struct AxisStyle{
     }
 };
 
-class CTikz{
+/**
+ * @brief C++ library to work with LaTeX
+ */
+class CTikz{ 
 public:
-    CTikz();
+    CTikz() noexcept;
     void create_tikz_file(std::string filename);
     void start_axis(AxisStyle style=AxisStyle()); // enlargelimits
     void end_axis();
@@ -118,7 +128,7 @@ public:
     void add_parse();
 
 private:
-    int block_status = 0; // 1 - axis, 2 - only tikz picture
+    int block_status = 0; /**< возможные значения: 0 - none, 1 - axis, 2 - only tikz picture */
     std::stringstream writing;
 };
 

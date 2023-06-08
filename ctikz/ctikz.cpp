@@ -152,14 +152,14 @@ void CTikz::drawCircle(double x, double y, double r, FigureStyle style){
     writing << "(" << x << "," << y << ")" << " circle (" << r << ");" << std::endl;
 }
 
-/*!
-\brief Рисует прямоугольник по двум противоположным вершинам
-\param x1 координата левой нижней вершины по горизонтальной оси (абсцисс)
-\param y1 координата левой нижней вершины вертикальной оси (ординат)
-\param x2 координата правой верхней вершины по горизонтальной оси (абсцисс)
-\param y2 координата правой верхней вершины вертикальной оси (ординат)
-\param style стиль фигуры (структура FigureStyle)
-\throw "Picture not found" если tikzpicture-блок не был начат.
+/**
+* @brief Рисует прямоугольник по двум противоположным вершинам
+* @param x1 координата левой нижней вершины по горизонтальной оси (абсцисс)
+* @param y1 координата левой нижней вершины вертикальной оси (ординат)
+* @param x2 координата правой верхней вершины по горизонтальной оси (абсцисс)
+* @param y2 координата правой верхней вершины вертикальной оси (ординат)
+* @param style стиль фигуры (структура FigureStyle)
+* @throw "Picture not found" если tikzpicture-блок не был начат.
 */
 void CTikz::drawRectangle(double x1, double y1, double x2, double y2, FigureStyle style){
     if(block_status != 2){
@@ -169,15 +169,15 @@ void CTikz::drawRectangle(double x1, double y1, double x2, double y2, FigureStyl
     writing << "(" << x1 << "," << y1 << ") rectangle (" << x2 << "," << y2 << ");" << std::endl;
 }
 
-/*!
-\brief Рисует вспомогательную сетку
-\param x1 координата левой нижней вершины по горизонтальной оси (абсцисс)
-\param y1 координата левой нижней вершины вертикальной оси (ординат)
-\param x2 координата правой верхней вершины по горизонтальной оси (абсцисс)
-\param y2 координата правой верхней вершины вертикальной оси (ординат)
-\param step шаг сетки
-\param style стиль фигуры (структура FigureStyle)
-\throw "Picture not found" если tikzpicture-блок не был начат.
+/**
+* @brief Рисует вспомогательную сетку
+* @param x1 координата левой нижней вершины по горизонтальной оси (абсцисс)
+* @param y1 координата левой нижней вершины вертикальной оси (ординат)
+* @param x2 координата правой верхней вершины по горизонтальной оси (абсцисс)
+* @param y2 координата правой верхней вершины вертикальной оси (ординат)
+* @param step шаг сетки
+* @param style стиль фигуры (структура FigureStyle)
+* @throw "Picture not found" если tikzpicture-блок не был начат.
 */
 void CTikz::drawGrid(double x1, double y1, double x2, double y2, double step, FigureStyle style){
     if(block_status != 2){
@@ -187,11 +187,11 @@ void CTikz::drawGrid(double x1, double y1, double x2, double y2, double step, Fi
     writing << "(" << x1 << "," << y1 << ") grid " << "(" << x2 << "," << y2 << ");" << std::endl;
 }
 
-/*!
-\brief Рисует ломанные линии, заданные по коориднатам
-\param point вектор точек формата (x, y)
-\param style стиль фигуры (структура FigureStyle)
-\throw "Picture not found" если tikzpicture-блок не был начат.
+/**
+* @brief Рисует ломанные линии, заданные по коориднатам
+* @param point вектор точек формата (x, y)
+* @param style стиль фигуры (структура FigureStyle)
+* @throw "Picture not found" если tikzpicture-блок не был начат.
 */
 void CTikz::drawLines(std::vector<std::pair<double, double>> point, FigureStyle style){
     if(block_status != 2){
@@ -205,9 +205,9 @@ void CTikz::drawLines(std::vector<std::pair<double, double>> point, FigureStyle 
     return;
 }
 
-/*!
-\brief добавляет отступ между блоками, в нашем случае блоки будут располагаться друг под другом
-\throw "Block not ended" если один из блоков не был закончен.
+/**
+* @brief добавляет отступ между блоками, в нашем случае блоки будут располагаться друг под другом
+* @throw "Block not ended" если один из блоков не был закончен.
 */
 void CTikz::add_parse(){
     if(block_status != 0){

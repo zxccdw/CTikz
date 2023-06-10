@@ -214,6 +214,12 @@ public:
     */
     void add_parse();
 
+    /**
+     * @brief Отображает матрицу в документе
+     * @param points вектор точек формата (x, y)
+     */
+    void draw_table(const std::vector<std::vector<double> >& points);
+
 
 private:
     int block_status = 0; /**< возможные значения: 0 - none, 1 - axis, 2 - only tikz picture */

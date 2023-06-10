@@ -143,3 +143,23 @@ void CTikz::add_parse(){
     }
     writing << std::endl;
 }
+
+void CTikz::draw_table(const std::vector< std::vector<double> > &matrix){
+    if(block_status != 0){
+        return;
+    }
+    writing << "\\begin{center}" << std::endl << "\\begin{tabular}{ |";
+    for(int i_columns = 0; i_columns < matrix[0].size(); ++i_columns){
+        writing << "c|";
+    }
+    writing << "}" << std::endl << "\t\\hline" << std::endl;
+    for(int temp_row = 0; temp_row < matrix.size(); ++temp_row){
+        writing << "\t";
+        for(int temp_col = 0; temp_col < matrix[0].size() - 1; ++temp_col){
+            writing << matrix[temp_row][temp_col] << " & ";
+        }
+        writing << matrix[temp_row][matrix[0].size() - 1] << "\\" << "\\" << std::endl << "\t\\hline" << std::endl;
+    }
+    writing << "\\end{tabular}" << std::endl << "\\end{center}" << std::endl;
+    return;
+}

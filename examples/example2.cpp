@@ -19,5 +19,5 @@ int main(){ // Пример с отрисовкой матрицы
         ar.push_back(temp);
     }
     my_tex.draw_table(ar);
-    my_tex.create_tikz_file("matrix_test");
+    my_tex.create_tikz_file("example2");
 }

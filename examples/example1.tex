@@ -1,0 +1,31 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[margin=0.25in]{geometry}
+\usepackage{tikz, pgfplots}
+\pgfplotsset{compat=1.9}
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+title=Пример 1,
+ymin=0,
+ymax=100,
+axis lines=left,
+grid,
+grid style=dashed,
+scale=1,
+enlargelimits=true]
+\addplot [
+mark=none,
+samples=400,
+color=red]
+{x^4};
+\addplot [
+mark=none,
+samples=400,
+color=blue]
+{e^x};
+\end{axis}
+\end{tikzpicture}
+\end{document}

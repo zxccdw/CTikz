@@ -10,8 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project(course)
 add_subdirectory(ctikz)
-add_executable(teh qwer.cpp)
-target_link_libraries(teh ctikz)
+#add_subdirectory(examples)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

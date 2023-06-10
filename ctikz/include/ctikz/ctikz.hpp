@@ -1,4 +1,5 @@
 #pragma once
+
 #ifndef CTIKZ_HPP
 
 #include <string>
@@ -10,6 +11,7 @@
 * @brief Структура, которая задает стиль функций.
 */
 struct FunctionStyle{
+    //r();
     std::string color = "black"; /**< цвет линии и точек */
     std::string mark = "none"; /**< обозначение отметок графика функции (по умолчанию толстые точки) */
     std::string mark_size = ""; /**< толщина отметок */
@@ -111,21 +113,107 @@ struct AxisStyle{
  */
 class CTikz{ 
 public:
+    /**
+     * @brief Construct a new CTikz::CTikz object
+     * Добавляет преамбулу в документ.
+     */
     CTikz() noexcept;
+
+    /**
+    * @brief Генерирует tikz файл
+    * @param filename название генерируемого файла (можно указать путь)
+    * @throw "File not created" файл не был создан (запустите от имени администратора или проверьте название файла)
+    */
     void create_tikz_file(std::string filename);
+
+    /**
+    * @brief Блок, отвечающий за начало системы координат.
+    * @param style Стиль системы координат (структура AxisStyle).
+    * @throw "Block not ended" Если какой-то из блоков не был закончен.
+    */
     void start_axis(AxisStyle style=AxisStyle()); // enlargelimits
+
+    /**
+    * @brief Конец блока с системой координат.
+    * @throw "Axis not started" В случае, если система координат не была начата.
+    */
     void end_axis();
-    void drawFunc(std::vector<std::pair<double, double> > points, FunctionStyle style=FunctionStyle());
+
+    /**
+    * @brief Добавляет функцию, которая будет нанесена на график по точкам.
+    * @param points Вектор пар точек (x, y).
+    * @param style Стиль функции (структура FunctionStyle).
+    * @throw "Axis not started" В случае, когда система координат не была начата.
+    */
+    void drawFunc(const std::vector<std::pair<double, double> >& points, FunctionStyle style=FunctionStyle());
+
+    /**
+    * @brief Добавляет функцию, которая будет нанесена на график по заданному уравнению
+    * @param func Уравнение функции, например x + 5
+    * @param style Стиль функции (структура FunctionStyle)
+    * @throw "Axis not started" В случае, когда система координат не была начата.
+    */
     void drawFunc(std::string func, FunctionStyle style=FunctionStyle());
 
+    /**
+    * @brief Начинает tikzpicture-блок, отвечающий за отрисовку фигур (без осей координат).
+    * @throw "Block not ended" Если какой-то из блоков не был закончен.
+    */
     void start_picture();
-    void end_picture();
-    void drawCircle(double x1, double y1, double r, FigureStyle style=FigureStyle());
-    void drawRectangle(double x1, double y1, double x2, double y2, FigureStyle style=FigureStyle());
-    void drawGrid(double x1, double y1, double x2, double y2, double step=1, FigureStyle style=FigureStyle());
-    void drawLines(std::vector<std::pair<double, double> > points, FigureStyle style=FigureStyle());
 
+    /**
+    * @brief Блок заканчивающий tikzpicture-блок.
+    * @throw "Block not ended" Если какой-то из блоков не был закончен.
+    */
+    void end_picture();
+
+    /**
+    * @brief Рисует окружность
+    * @param x координата центра окр-ти по горизонтальной оси (абсцисс)
+    * @param y координата центра окр-ти по вертикальной оси (ординат)
+    * @param r радиус окружности
+    * @param style стиль фигуры (структура FigureStyle)
+    * @throw "Picture not found" если tikzpicture-блок не был начат.
+    */
+    void drawCircle(double x1, double y1, double r, FigureStyle style=FigureStyle());
+
+    /**
+    * @brief Рисует прямоугольник по двум противоположным вершинам
+    * @param x1 координата левой нижней вершины по горизонтальной оси (абсцисс)
+    * @param y1 координата левой нижней вершины вертикальной оси (ординат)
+    * @param x2 координата правой верхней вершины по горизонтальной оси (абсцисс)
+    * @param y2 координата правой верхней вершины вертикальной оси (ординат)
+    * @param style стиль фигуры (структура FigureStyle)
+    * @throw "Picture not found" если tikzpicture-блок не был начат.
+    */
+    void drawRectangle(double x1, double y1, double x2, double y2, FigureStyle style=FigureStyle());
+
+    /**
+    * @brief Рисует вспомогательную сетку
+    * @param x1 координата левой нижней вершины по горизонтальной оси (абсцисс)
+    * @param y1 координата левой нижней вершины вертикальной оси (ординат)
+    * @param x2 координата правой верхней вершины по горизонтальной оси (абсцисс)
+    * @param y2 координата правой верхней вершины вертикальной оси (ординат)
+    * @param step шаг сетки
+    * @param style стиль фигуры (структура FigureStyle)
+    * @throw "Picture not found" если tikzpicture-блок не был начат.
+    */
+    void drawGrid(double x1, double y1, double x2, double y2, double step=1, FigureStyle style=FigureStyle());
+
+    /**
+    * @brief Рисует ломанные линии, заданные по коориднатам
+    * @param point вектор точек формата (x, y)
+    * @param style стиль фигуры (структура FigureStyle)
+    * @throw "Picture not found" если tikzpicture-блок не был начат.
+    */
+    void drawLines(const std::vector<std::pair<double, double> >& points, FigureStyle style=FigureStyle());
+
+    /**
+    * @brief добавляет отступ между блоками, в нашем случае блоки будут располагаться друг под другом
+    * @throw "Block not ended" если один из блоков не был закончен.
+    */
     void add_parse();
+
 
 private:
     int block_status = 0; /**< возможные значения: 0 - none, 1 - axis, 2 - only tikz picture */

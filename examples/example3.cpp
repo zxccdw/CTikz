@@ -5,7 +5,7 @@
 
 //using namespace std;
 
-int main(){ // Пример с отрисовкой матрицы
+int main(){ // Пример с отрисовкой фигур
     CTikz my_tex;
     my_tex.start_picture();
     FigureStyle figure;

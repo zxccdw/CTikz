@@ -20,17 +20,8 @@ add_subdirectory(ctikz)
 
 ## Пример использования
 
-```cpp
-#include "CTikz.hpp"
+Примеры использования библиотеки можно найти в папке `examples` нашего репозитория:
 
-int main() {
-    CTikz tikz;
-    tikz.start_axis();
-    tikz.drawFunc("x + 5", FunctionStyle{});
-    tikz.end_axis();
-    tikz.create_tikz_file("example.tex");
-    return 0;
-}
-```
+[Примеры использования CTikz](https://github.com/zxccdw/CTikz/tree/main/examples)
 
-Этот пример создает LaTeX документ с графиком функции `x + 5`.
+Эти примеры демонстрируют различные возможности CTikz, включая создание графиков функций, фигур и систем координат.
